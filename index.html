@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SaleRoar · Oak Park's best grocery deals, every Wednesday</title>
+  <meta name="description" content="SaleRoar is a free weekly newsletter with the best grocery sale prices at Jewel-Osco, Pete's Fresh Market and Aldi in Oak Park, IL. New deals every Wednesday.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦁</text></svg>">
+  <style>
+    :root {
+      --bg: #fffaf2;
+      --surface: #ffffff;
+      --ink: #1f1a14;
+      --muted: #5c5247;
+      --line: #eadfce;
+      --brand: #c2410c;
+      --brand-dark: #9a3412;
+      --brand-soft: #ffedd5;
+      --good: #166534;
+      --good-soft: #dcfce7;
+      --warn-soft: #fef3c7;
+      --warn-ink: #78350f;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-size: 18px;
+      line-height: 1.55;
+    }
+
+    .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+
+    a { color: var(--brand-dark); }
+
+    /* Header */
+    header { padding: 20px 0; }
+    .logo {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-weight: 800; font-size: 1.5rem; text-decoration: none; color: var(--ink);
+    }
+    .logo span { color: var(--brand); }
+
+    /* Hero */
+    .hero { padding: 32px 0 48px; }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.1rem);
+      line-height: 1.12;
+      margin: 0 0 16px;
+      letter-spacing: -0.02em;
+    }
+    .hero h1 em { font-style: normal; color: var(--brand); }
+    .hero p.lead { font-size: 1.2rem; color: var(--muted); max-width: 40em; margin: 0 0 28px; }
+
+    .stores { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 28px; padding: 0; list-style: none; }
+    .stores li {
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: 999px; padding: 6px 14px; font-size: 0.95rem;
+    }
+
+    /* Sign-up */
+    .signup {
+      background: var(--surface);
+      border: 2px solid var(--brand);
+      border-radius: var(--radius);
+      padding: 24px;
+      max-width: 560px;
+    }
+    .signup h2 { margin: 0 0 6px; font-size: 1.35rem; }
+    .signup p { margin: 0 0 16px; color: var(--muted); }
+    .signup form { display: flex; flex-wrap: wrap; gap: 10px; }
+    .signup label { position: absolute; left: -9999px; }
+    .signup input[type="email"] {
+      flex: 1 1 240px;
+      font: inherit;
+      padding: 14px 16px;
+      border: 1px solid #c9bba6;
+      border-radius: 10px;
+      min-height: 52px;
+    }
+    .signup input[type="email"]:focus { outline: 3px solid var(--brand-soft); border-color: var(--brand); }
+    .btn {
+      font: inherit; font-weight: 700;
+      background: var(--brand); color: #fff;
+      border: 0; border-radius: 10px;
+      padding: 14px 22px; min-height: 52px;
+      cursor: pointer;
+    }
+    .btn:hover { background: var(--brand-dark); }
+    .btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+    .fine { font-size: 0.9rem; color: var(--muted); margin-top: 10px !important; margin-bottom: 0 !important; }
+    .thanks {
+      display: none;
+      background: var(--good-soft); color: var(--good);
+      border-radius: 10px; padding: 14px 16px; font-weight: 600;
+    }
+
+    /* Sections */
+    section { padding: 40px 0; border-top: 1px solid var(--line); }
+    section h2 { font-size: 1.7rem; margin: 0 0 8px; }
+    section > .wrap > p.sub { color: var(--muted); margin: 0 0 24px; }
+
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .step {
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 20px;
+    }
+    .step b { display: block; font-size: 1.1rem; margin-bottom: 4px; }
+    .step p { margin: 0; color: var(--muted); }
+
+    /* Sample banner */
+    .sample-note {
+      background: var(--warn-soft); color: var(--warn-ink);
+      border-radius: 10px; padding: 12px 16px; margin: 0 0 20px;
+      font-size: 0.95rem;
+    }
+
+    /* Top 5 */
+    .top5 { list-style: none; padding: 0; margin: 0 0 32px; display: grid; gap: 10px; }
+    .top5 li {
+      display: flex; gap: 14px; align-items: baseline;
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: 10px; padding: 14px 16px;
+    }
+    .top5 .num { font-weight: 800; color: var(--brand); min-width: 1.4em; }
+    .top5 .price { margin-left: auto; font-weight: 700; white-space: nowrap; }
+
+    /* Table */
+    .table-scroll {
+      overflow-x: auto;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    caption { text-align: left; padding: 14px 16px 0; font-weight: 700; }
+    th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+    td.num, th.num { text-align: right; white-space: nowrap; }
+    tbody tr:last-child td { border-bottom: 0; }
+    tr.cat td {
+      background: var(--brand-soft); font-weight: 700; font-size: 0.95rem;
+      padding-top: 8px; padding-bottom: 8px;
+    }
+    .best {
+      display: inline-block; background: var(--good-soft); color: var(--good);
+      font-size: 0.8rem; font-weight: 700; border-radius: 999px; padding: 2px 8px; margin-left: 6px;
+    }
+    .clip { font-size: 0.9rem; }
+    .clip.yes { color: var(--warn-ink); font-weight: 600; }
+
+    .legend { font-size: 0.9rem; color: var(--muted); margin-top: 12px; }
+
+    /* Law callout */
+    .callout {
+      background: var(--surface); border-left: 6px solid var(--brand);
+      border-radius: var(--radius); padding: 20px 24px;
+    }
+    .callout h2 { font-size: 1.4rem; }
+    .callout p:last-child { margin-bottom: 0; }
+
+    footer { padding: 32px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.95rem; }
+    footer p { margin: 0 0 8px; }
+
+    @media (max-width: 560px) {
+      body { font-size: 17px; }
+      .signup { padding: 18px; }
+      .btn { width: 100%; }
+      .top5 li { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="wrap">
+      <a class="logo" href="#" aria-label="SaleRoar home">🦁 Sale<span>Roar</span></a>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div class="wrap">
+        <h1>Oak Park's best grocery deals.<br><em>Every Wednesday.</em></h1>
+        <p class="lead">SaleRoar cuts through the noise. We read the weekly ads so you don't have to, then send one short, free email: what's on sale, where it's cheapest, and what needs a digital coupon.</p>
+
+        <ul class="stores" aria-label="Stores we cover">
+          <li>Jewel-Osco (2 stores)</li>
+          <li>Pete's Fresh Market (2 stores)</li>
+          <li>Aldi</li>
+        </ul>
+
+        <div class="signup" id="signup">
+          <h2>Get the deals free every Wednesday</h2>
+          <p>For neighbors in 60301, 60302 and 60304. No app needed.</p>
+          <!-- TODO: connect to the newsletter tool once the owner picks one
+               (e.g. Buttondown, Beehiiv, Mailchimp). Until then this form
+               does NOT save or send email addresses anywhere. -->
+          <form id="signup-form" novalidate>
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+            <button class="btn" type="submit">Yes, send me deals!</button>
+          </form>
+          <div class="thanks" id="thanks" role="status">Yaaasss! You're on the list. Watch your inbox Wednesday morning.</div>
+          <p class="fine">Free. One email a week. Unsubscribe anytime. We never share your email.</p>
+        </div>
+      </div>
+    </div>
+
+    <section aria-labelledby="how">
+      <div class="wrap">
+        <h2 id="how">How it works</h2>
+        <p class="sub">Three steps, about two minutes of your week.</p>
+        <div class="steps">
+          <div class="step"><b>1. We read the ads</b><p>Every week we go through the sale flyers for all five nearby stores.</p></div>
+          <div class="step"><b>2. We compare prices</b><p>We line up prices by the pound, dozen or ounce, so you see the real cheapest deal.</p></div>
+          <div class="step"><b>3. You shop smarter</b><p>Open the email, see the Top 5 deals and which store to visit for what.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="deals">
+      <div class="wrap">
+        <h2 id="deals">This week's deals (preview)</h2>
+        <p class="sub">Here's what a weekly issue looks like.</p>
+
+        <p class="sample-note"><strong>Sample only.</strong> The prices below are made-up examples to show the layout. They are not real current prices from any store.</p>
+
+        <h3>Top 5 deals</h3>
+        <ol class="top5">
+          <li><span class="num">1</span><span>Boneless chicken breast · Pete's Fresh Market</span><span class="price">$1.99/lb</span></li>
+          <li><span class="num">2</span><span>Large eggs, 1 dozen · Aldi</span><span class="price">$2.49</span></li>
+          <li><span class="num">3</span><span>Strawberries, 1 lb · Jewel-Osco <em>(digital coupon)</em></span><span class="price">$1.99</span></li>
+          <li><span class="num">4</span><span>Bananas · Aldi</span><span class="price">$0.49/lb</span></li>
+          <li><span class="num">5</span><span>Shredded cheese, 8 oz · Pete's Fresh Market</span><span class="price">$2.00</span></li>
+        </ol>
+
+        <div class="table-scroll" role="region" aria-label="Sample deals table" tabindex="0">
+          <table>
+            <caption>Price comparison by category (SAMPLE)</caption>
+            <thead>
+              <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Size</th>
+                <th scope="col" class="num">Sale price</th>
+                <th scope="col" class="num">Unit price</th>
+                <th scope="col">Store</th>
+                <th scope="col">Digital coupon?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="cat"><td colspan="6">🥩 Meat</td></tr>
+              <tr>
+                <td>Boneless chicken breast <span class="best">Best price</span></td>
+                <td>per lb</td><td class="num">$1.99</td><td class="num">$1.99/lb</td>
+                <td>Pete's Fresh Market</td><td class="clip">No</td>
+              </tr>
+              <tr>
+                <td>Boneless chicken breast</td>
+                <td>per lb</td><td class="num">$2.49</td><td class="num">$2.49/lb</td>
+                <td>Jewel-Osco</td><td class="clip yes">Yes</td>
+              </tr>
+              <tr>
+                <td>Ground beef 80/20 <span class="best">Best price</span></td>
+                <td>3 lb pack</td><td class="num">$11.97</td><td class="num">$3.99/lb</td>
+                <td>Aldi</td><td class="clip">No</td>
+              </tr>
+
+              <tr class="cat"><td colspan="6">🥚 Dairy &amp; eggs</td></tr>
+              <tr>
+                <td>Large eggs <span class="best">Best price</span></td>
+                <td>1 dozen</td><td class="num">$2.49</td><td class="num">$2.49/dozen</td>
+                <td>Aldi</td><td class="clip">No</td>
+              </tr>
+              <tr>
+                <td>Large eggs</td>
+                <td>18 ct</td><td class="num">$4.29</td><td class="num">$2.86/dozen</td>
+                <td>Jewel-Osco</td><td class="clip yes">Yes</td>
+              </tr>
+              <tr>
+                <td>Shredded cheese <span class="best">Best price</span></td>
+                <td>8 oz</td><td class="num">$2.00</td><td class="num">$0.25/oz</td>
+                <td>Pete's Fresh Market</td><td class="clip">No</td>
+              </tr>
+
+              <tr class="cat"><td colspan="6">🍓 Produce</td></tr>
+              <tr>
+                <td>Strawberries <span class="best">Best price</span></td>
+                <td>1 lb</td><td class="num">$1.99</td><td class="num">$1.99/lb</td>
+                <td>Jewel-Osco</td><td class="clip yes">Yes</td>
+              </tr>
+              <tr>
+                <td>Bananas <span class="best">Best price</span></td>
+                <td>per lb</td><td class="num">$0.49</td><td class="num">$0.49/lb</td>
+                <td>Aldi</td><td class="clip">No</td>
+              </tr>
+              <tr>
+                <td>Avocados</td>
+                <td>each</td><td class="num">$0.99</td><td class="num">$0.99 each</td>
+                <td>Pete's Fresh Market</td><td class="clip">No</td>
+              </tr>
+
+              <tr class="cat"><td colspan="6">🥫 Pantry</td></tr>
+              <tr>
+                <td>Pasta <span class="best">Best price</span></td>
+                <td>16 oz</td><td class="num">$0.99</td><td class="num">$0.06/oz</td>
+                <td>Jewel-Osco</td><td class="clip">No</td>
+              </tr>
+              <tr>
+                <td>Peanut butter</td>
+                <td>16 oz</td><td class="num">$1.89</td><td class="num">$0.12/oz</td>
+                <td>Aldi</td><td class="clip">No</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="legend"><strong>Digital coupon? Yes</strong> means you need to "clip" the deal in the store's app or website to get that price. Sale dates: Wed–Tue (sample).</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="law">
+      <div class="wrap">
+        <div class="callout">
+          <h2 id="law">New Illinois law on digital coupons starts January 1</h2>
+          <p>Under Illinois HB 45 (Public Act 104-0476), stores that have an app must make their digital deals available to any eligible shopper through a practical method, such as an automatic discount, a barcode or a QR code.</p>
+          <p>Confused about what that means at the register? So is everyone. SaleRoar will explain it in plain words as it rolls out. <a href="#signup">Sign up</a> to stay in the loop.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p><strong>SaleRoar</strong> · Oak Park, Illinois · saleroar.com</p>
+      <p>SaleRoar is independent and not affiliated with Jewel-Osco, Pete's Fresh Market, Aldi or any store. Prices come from each store's weekly ad. Always check the store's own ad before you shop.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Placeholder sign-up: only checks the email and shows a thank-you.
+    // Nothing is saved or sent until a newsletter tool is connected.
+    document.getElementById('signup-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var input = document.getElementById('email');
+      if (!input.checkValidity() || !input.value.trim()) {
+        input.focus();
+        input.setAttribute('aria-invalid', 'true');
+        input.placeholder = 'Please enter a valid email';
+        return;
+      }
+      this.style.display = 'none';
+      document.getElementById('thanks').style.display = 'block';
+    });
+  </script>
+</body>
+</html>

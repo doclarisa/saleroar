@@ -5,17 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SaleRoar · Oak Park's best grocery deals, every Wednesday</title>
   <meta name="description" content="SaleRoar is a free weekly newsletter with the best grocery sale prices at Jewel-Osco, Pete's Fresh Market and Aldi in Oak Park, IL. New deals every Wednesday.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦁</text></svg>">
+  <link rel="icon" type="image/png" href="images/favicon.png">
   <style>
+    /* Colors match the logo: green "Roar", orange "Sale". */
     :root {
       --bg: #fffaf2;
       --surface: #ffffff;
       --ink: #1f1a14;
       --muted: #5c5247;
       --line: #eadfce;
-      --brand: #c2410c;
-      --brand-dark: #9a3412;
-      --brand-soft: #ffedd5;
+      --brand: #1f6f32;
+      --brand-dark: #165425;
+      --brand-soft: #e8f5e9;
+      --accent: #f29a1f;
+      --accent-ink: #b45309;
       --good: #166534;
       --good-soft: #dcfce7;
       --warn-soft: #fef3c7;
@@ -39,12 +42,9 @@
     a { color: var(--brand-dark); }
 
     /* Header */
-    header { padding: 20px 0; }
-    .logo {
-      display: inline-flex; align-items: center; gap: 10px;
-      font-weight: 800; font-size: 1.5rem; text-decoration: none; color: var(--ink);
-    }
-    .logo span { color: var(--brand); }
+    header { padding: 12px 0; background: #fff; border-bottom: 1px solid var(--line); }
+    .logo { display: inline-block; }
+    .logo img { display: block; width: 100%; max-width: 360px; height: auto; }
 
     /* Hero */
     .hero { padding: 32px 0 48px; }
@@ -54,7 +54,7 @@
       margin: 0 0 16px;
       letter-spacing: -0.02em;
     }
-    .hero h1 em { font-style: normal; color: var(--brand); }
+    .hero h1 em { font-style: normal; color: var(--accent-ink); }
     .hero p.lead { font-size: 1.2rem; color: var(--muted); max-width: 40em; margin: 0 0 28px; }
 
     .stores { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 28px; padding: 0; list-style: none; }
@@ -66,39 +66,14 @@
     /* Sign-up */
     .signup {
       background: var(--surface);
-      border: 2px solid var(--brand);
+      border: 2px solid var(--accent);
       border-radius: var(--radius);
       padding: 24px;
       max-width: 560px;
     }
     .signup h2 { margin: 0 0 6px; font-size: 1.35rem; }
     .signup p { margin: 0 0 16px; color: var(--muted); }
-    .signup form { display: flex; flex-wrap: wrap; gap: 10px; }
-    .signup label { position: absolute; left: -9999px; }
-    .signup input[type="email"] {
-      flex: 1 1 240px;
-      font: inherit;
-      padding: 14px 16px;
-      border: 1px solid #c9bba6;
-      border-radius: 10px;
-      min-height: 52px;
-    }
-    .signup input[type="email"]:focus { outline: 3px solid var(--brand-soft); border-color: var(--brand); }
-    .btn {
-      font: inherit; font-weight: 700;
-      background: var(--brand); color: #fff;
-      border: 0; border-radius: 10px;
-      padding: 14px 22px; min-height: 52px;
-      cursor: pointer;
-    }
-    .btn:hover { background: var(--brand-dark); }
-    .btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
     .fine { font-size: 0.9rem; color: var(--muted); margin-top: 10px !important; margin-bottom: 0 !important; }
-    .thanks {
-      display: none;
-      background: var(--good-soft); color: var(--good);
-      border-radius: 10px; padding: 14px 16px; font-weight: 600;
-    }
 
     /* Sections */
     section { padding: 40px 0; border-top: 1px solid var(--line); }
@@ -127,7 +102,7 @@
       background: var(--surface); border: 1px solid var(--line);
       border-radius: 10px; padding: 14px 16px;
     }
-    .top5 .num { font-weight: 800; color: var(--brand); min-width: 1.4em; }
+    .top5 .num { font-weight: 800; color: var(--accent-ink); min-width: 1.4em; }
     .top5 .price { margin-left: auto; font-weight: 700; white-space: nowrap; }
 
     /* Table */
@@ -170,7 +145,6 @@
     @media (max-width: 560px) {
       body { font-size: 17px; }
       .signup { padding: 18px; }
-      .btn { width: 100%; }
       .top5 li { flex-wrap: wrap; }
     }
   </style>
@@ -179,7 +153,7 @@
 
   <header>
     <div class="wrap">
-      <a class="logo" href="#" aria-label="SaleRoar home">🦁 Sale<span>Roar</span></a>
+      <a class="logo" href="#"><img src="images/saleroar-header.jpg" width="1200" height="400" alt="SaleRoar: best grocery deals from local groceries"></a>
     </div>
   </header>
 
@@ -198,15 +172,9 @@
         <div class="signup" id="signup">
           <h2>Get the deals free every Wednesday</h2>
           <p>For neighbors in 60301, 60302 and 60304. No app needed.</p>
-          <!-- TODO: connect to the newsletter tool once the owner picks one
-               (e.g. Buttondown, Beehiiv, Mailchimp). Until then this form
-               does NOT save or send email addresses anywhere. -->
-          <form id="signup-form" novalidate>
-            <label for="email">Email address</label>
-            <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
-            <button class="btn" type="submit">Yes, send me deals!</button>
-          </form>
-          <div class="thanks" id="thanks" role="status">Yaaasss! You're on the list. Watch your inbox Wednesday morning.</div>
+          <!-- Beehiiv form "saleroar.com homepage sign-up". Its look and
+               thank-you message are edited in Beehiiv, not here. -->
+          <script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="5cf1db14-8294-42de-95dd-b3762f8b848c"></script>
           <p class="fine">Free. One email a week. Unsubscribe anytime. We never share your email.</p>
         </div>
       </div>
@@ -341,21 +309,5 @@
     </div>
   </footer>
 
-  <script>
-    // Placeholder sign-up: only checks the email and shows a thank-you.
-    // Nothing is saved or sent until a newsletter tool is connected.
-    document.getElementById('signup-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-      var input = document.getElementById('email');
-      if (!input.checkValidity() || !input.value.trim()) {
-        input.focus();
-        input.setAttribute('aria-invalid', 'true');
-        input.placeholder = 'Please enter a valid email';
-        return;
-      }
-      this.style.display = 'none';
-      document.getElementById('thanks').style.display = 'block';
-    });
-  </script>
 </body>
 </html>
